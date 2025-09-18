@@ -1,8 +1,13 @@
 from .client import TemponizerClient
-from .functionality.vagtplaner import VagtplanerClient
+from .functionality.vagtplaner import VagtplanerClient, PlanType
+from .functionality.medarbjeder import MedarbjederClient
+from .functionality.institutioner import InstitutionerClient
 from typing import Optional
 
 class TemponizerClientManager:
+    # Expose PlanType enum for let tilgængelighed
+    PlanType = PlanType
+    
     def __init__(self, instance: str, client_id: str, client_secret: str, username: str, password: str) -> None:
         """
         Initialize the TemponizerClientManager with connection parameters.
@@ -20,6 +25,8 @@ class TemponizerClientManager:
         self.password = password
         self._client: Optional[TemponizerClient] = None
         self._vagtplaner: Optional[VagtplanerClient] = None
+        self._medarbejder: Optional[MedarbjederClient] = None
+        self._institutioner: Optional[InstitutionerClient] = None
 
 
     @property
@@ -39,3 +46,15 @@ class TemponizerClientManager:
         if self._vagtplaner is None:
             self._vagtplaner = VagtplanerClient(self.client)
         return self._vagtplaner
+    
+    @property
+    def medarbejder(self) -> MedarbjederClient:
+        if self._medarbejder is None:
+            self._medarbejder = MedarbjederClient(self.client)
+        return self._medarbejder
+    
+    @property
+    def institutioner(self) -> InstitutionerClient:
+        if self._institutioner is None:
+            self._institutioner = InstitutionerClient(self.client)
+        return self._institutioner

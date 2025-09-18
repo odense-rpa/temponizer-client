@@ -49,3 +49,15 @@ def vagtplaner_client(temponizer_manager):
     return temponizer_manager.vagtplaner
 
 
+@pytest.fixture(scope="session")
+def medarbejder_client(temponizer_manager):
+    """Returns the MedarbjederClient for employee operations."""
+    return temponizer_manager.medarbejder
+
+
+@pytest.fixture(scope="session")
+def institutioner_client(temponizer_manager):
+    """Returns the InstitutionerClient for institution operations."""
+    return temponizer_manager.institutioner
+
+

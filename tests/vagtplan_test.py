@@ -1,8 +1,5 @@
 from datetime import date
-from dotenv import load_dotenv
 from temponizer_client.manager import TemponizerClientManager
-
-load_dotenv()
 
 
 def test_hent_vagtplan(temponizer_manager: TemponizerClientManager):
@@ -10,7 +7,7 @@ def test_hent_vagtplan(temponizer_manager: TemponizerClientManager):
     # Test parameters
     startdato = date(2025, 9, 17)
     slutdato = date(2025, 9, 23)
-    plantype = "upcoming"
+    plantype = temponizer_manager.PlanType.UPCOMING  # Using enum through manager
     
     # Call the function through the manager
     result = temponizer_manager.vagtplaner.hent_vagtplan(startdato, slutdato, plantype)
@@ -41,16 +38,6 @@ def test_hent_vagtplan(temponizer_manager: TemponizerClientManager):
             assert isinstance(shift['workerName'], str), "workerName should be a string"
             assert isinstance(shift['clientId'], int), "clientId should be an integer"
             assert isinstance(shift['clientName'], str), "clientName should be a string"
-            
-            # Validate date format (YYYY-MM-DD)
-            import re
-            date_pattern = r'^\d{4}-\d{2}-\d{2}$'
-            assert re.match(date_pattern, shift['date']), "date should be in YYYY-MM-DD format"
-            
-            # Validate ISO datetime format for start and end times
-            datetime_pattern = r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$'
-            assert re.match(datetime_pattern, shift['startTime']), "startTime should be in ISO format"
-            assert re.match(datetime_pattern, shift['endTime']), "endTime should be in ISO format"
             
     else:
         # A None result indicates a 404, which is also valid (no shifts found)

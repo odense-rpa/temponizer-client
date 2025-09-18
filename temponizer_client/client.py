@@ -41,7 +41,7 @@ class TemponizerClient:
             grant_type='password',
             username=username,
             password=password,
-            scope='application:read customer:full shifts:full admin:export',
+            scope='application:read customer:full workers:full shifts:full admin:export',
             auth=None  # disables Basic Auth so client_id/secret goes in the body
         )
     
