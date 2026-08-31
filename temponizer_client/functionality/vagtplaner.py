@@ -21,12 +21,16 @@ class VagtplanerClient:
         """
         Henter vagtplan af en bestemt type inden for et dato spænd
 
+        Tidspunkter i svaret returneres i UTC (med ``Z``-suffix). De er derfor
+        2 timer bagud i forhold til dansk sommertid og 1 time bagud i forhold
+        til dansk normaltid. Konverter dem til lokal tid ved visning.
+
         """
 
         endpoint = f"/shift/admin/{plantype.value}"
         params = {
-            'startdate': startdato.isoformat(),
-            'enddate': slutdato.isoformat()
+            'from_date': startdato.isoformat(),
+            'to_date': slutdato.isoformat()
         }
         response = self._client.get(endpoint, params=params)
         if response.status_code == 404:
