@@ -33,3 +33,21 @@ class MedarbjederClient:
         if response.status_code == 404:
             return None
         return response.json()
+
+    def hent_medarbejder_uddannelse(self, medarbejderId: int) -> Optional[dict]:
+        endpoint = f"/worker/{medarbejderId}/education"
+
+        response = self._client.get(endpoint)
+
+        if response.status_code == 404:
+            return None
+        return response.json()
+
+    def hent_medarbejder_skill(self, medarbejderId: int) -> Optional[dict]:
+        endpoint = f"/worker/{medarbejderId}/skill"
+
+        response = self._client.get(endpoint)
+
+        if response.status_code == 404:
+            return None
+        return response.json()

@@ -1,12 +1,12 @@
-from datetime import date
+from datetime import date, timedelta
 from temponizer_client.manager import TemponizerClientManager
 
 
 def test_hent_vagtplan(temponizer_manager: TemponizerClientManager):
     """Test the hent_vagtplan function with a real API call."""
     # Test parameters
-    startdato = date(2025, 9, 17)
-    slutdato = date(2025, 9, 23)
+    startdato = date.today()
+    slutdato = startdato + timedelta(days=1)
     plantype = temponizer_manager.PlanType.UPCOMING  # Using enum through manager
     
     # Call the function through the manager
